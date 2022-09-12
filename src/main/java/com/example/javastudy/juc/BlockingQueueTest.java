@@ -24,7 +24,6 @@ public class BlockingQueueTest {
                 try {
                     Integer value = arrayBlockingQueue.take();
                     System.out.println(LocalDateTime.now() + "get" + value + "from arrayBlockingQueue");
-//                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
