@@ -12,6 +12,14 @@ import java.util.concurrent.CyclicBarrier;
  * Exception会同时导致其他线程也会抛出Exception
  * 2、barrierAction种需要对Exception进行处理避免影响整个业务逻辑
  */
+
+/**
+ *  CyclicBarrier和CountDownLatch的区别
+ *  CountDownLatch是计数器只能使用一次，而CyclicBarrier的计数器有reset功能乐意使用多次
+ *  对CountDownLatch来说重点是一个线程（多个线程）等待，而其他的N个线程在完成某件时间后，可以终止也可以等待，
+ *  而对于CyclicBarrier重点是多个线程，在任何一个线程没有完成所有的线程都必须等待
+ *  CountDownLatch是计数器，线程完成一个记录减一个，CyclicBarrier有点类似于阀门，所有线程都要打到阀门才能打开，然后继续执行
+ */
 public class CyclicBarrierTest {
 
     /**
