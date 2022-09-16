@@ -49,9 +49,9 @@ public class ScheduledThreadPoolExecutorTest {
         //3、按照固定的周期执行,我们创建了一个核心线程池为10的
         //ScheduledThreadPoolExecutor，并计划了一个定期（每5秒钟）执行一次的任务
         // ，过打印的日志我们可以看到每次任务开始执行的时间为：上次任务开始时间+5秒钟：
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+        ScheduledExecutorService executors = Executors.newScheduledThreadPool(10);
         System.out.print("start schedule a task.");
-        executor.scheduleAtFixedRate(() -> {
+        executors.scheduleAtFixedRate(() -> {
             System.out.print("task is running.");
             try {
                 Thread.sleep(2000);
