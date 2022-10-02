@@ -1,4 +1,4 @@
-package com.example.javastudy.netty;
+package com.example.javastudy.netty.javanio;
 
 import java.io.File;
 import java.io.FileInputStream;
