@@ -1,6 +1,8 @@
 package com.example.javastudy.designMode.chainMode;
 
+import lombok.ToString;
 
+@ToString
 public class User {
 
     private String name;
