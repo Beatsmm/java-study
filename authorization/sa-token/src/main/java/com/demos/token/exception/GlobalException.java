@@ -1,8 +1,7 @@
 package com.demos.token.exception;
 
 
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,6 +25,35 @@ public class GlobalException {
         e.printStackTrace();
         return SaResult.error("缺少权限："+e.getPermission());
     }
+
+    // 拦截：缺少角色异常
+    @ExceptionHandler(NotRoleException.class)
+    public SaResult handlerException(NotSafeException e){
+        e.printStackTrace();
+        return SaResult.error("二级认证校验失败:"+e.getService());
+    }
+
+    // 拦截：服务封禁异常
+    @ExceptionHandler(DisableServiceException.class)
+    public SaResult handlerException(DisableServiceException e) {
+        e.printStackTrace();
+        return SaResult.error("当前账号 " + e.getService() + " 服务已被封禁 (level=" + e.getLevel() + ")：" + e.getDisableTime() + "秒后解封");
+    }
+
+    // 拦截：Http Basic 校验失败异常
+    @ExceptionHandler(NotBasicAuthException.class)
+    public SaResult handlerException(NotBasicAuthException e) {
+        e.printStackTrace();
+        return SaResult.error(e.getMessage());
+    }
+
+    // 拦截：其它所有异常
+    @ExceptionHandler(Exception.class)
+    public SaResult handlerException(Exception e) {
+        e.printStackTrace();
+        return SaResult.error(e.getMessage());
+    }
+
 
 
 }
