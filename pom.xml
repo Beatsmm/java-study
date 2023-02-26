@@ -9,6 +9,7 @@
         <module>authorization</module>
         <module>sa-token</module>
         <module>sa-token</module>
+        <module>jvm</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
