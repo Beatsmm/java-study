@@ -6,6 +6,8 @@ import com.example.javastudy.designMode.observerMode.event.listener.MyScoreListe
 import com.example.javastudy.designMode.observerMode.event.listener.MySmsListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.math.BigDecimal;
+
 /**
  * 观察者模式就是当一个行为发生时传递信息给另外一个用户接受做出相应的处理，两者之间没有直接的耦合关系，
  * 家兔我们经常使用的MQ服务，虽然MQ服务是有一个通知中心并不是每一个类服务进行通知，但是总体上也可以算
