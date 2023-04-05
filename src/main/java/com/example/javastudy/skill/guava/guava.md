@@ -70,7 +70,7 @@ HashBiMap<String, String> biMap = HashBiMap.create();
         System.out.println(inverse.get("USA"));
 ```
 注意！！！经过inverse的BiMap,如果对转化后的key在次进行put会覆盖掉原先的biMap  
-***2、*** value不可重复,BiMap的底层继承了Map,我们知道在Map中的key是不允许重复的,而双向的BiMap中的key和value可以认为处于等价地位,因此在这个基础之上增加了限制,value也是不可重复的
+value不可重复,BiMap的底层继承了Map,我们知道在Map中的key是不允许重复的,而双向的BiMap中的key和value可以认为处于等价地位,因此在这个基础之上增加了限制,value也是不可重复的
 ```
         HashBiMap<String, String> repeatKeyOrValue = HashBiMap.create();
         repeatKeyOrValue.put("key1", "value1");
@@ -78,4 +78,72 @@ HashBiMap<String, String> biMap = HashBiMap.create();
         // 如果非要把新的key映射到已有的value上,那么也可以使用forcePut方法强制替换掉原有的key
         repeatKeyOrValue.forcePut("key2", "value1");
         System.out.println(repeatKeyOrValue);
+```
+***3、*** Multimap-多值Map  
+java中的Map维护的是键值一对一的关系,如果要将一个映射到多个值上,那么就只能把值的内容设为集合形式,简单实现
+```
+        Map<String, List<Integer>> javaMapping = new HashMap<>();
+        List<Integer> list = Lists.newArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        javaMapping.put("day", list);
+        System.out.println(javaMapping);
+```
+guava中的Multimap提供了讲一个键映射到多个值的形式,使用起来无需定义复杂的内层集合,可以像使用普通的Map一样使用它
+```
+        ArrayListMultimap<String, Integer> multimap = ArrayListMultimap.create();
+        multimap.put("day", 1);
+        multimap.put("day", 2);
+        multimap.put("day", 3);
+        System.out.println(multimap);
+```
+```
+//1、获取值的集合 可以创建ListMultimap、TreeMultimap、 HashMultimap
+List<Integer> listInt = multimap.get("day");
+// get方法会返回一个非null的集合,但是这个集合的内容可能是空的,看一下下面的例子
+List<Integer> testNullKey = multimap.get("nullKey");
+System.out.println(testNullKey); // []
+```
+操作get后的集合：和BiMap的使用类似,使用get方法返回的集合也不是一个独立的对象,可以理解为集合视图的关联,对这个新集合的操作仍然会作用于原始的Multimap上
+```
+        List<Integer> listDay = multimap.get("day");
+        listDay.remove(0);
+        List<Integer> listMonth = multimap.get("month");
+        listMonth.add(12);
+        System.out.println(multimap); // {month=[3, 12], day=[2, 3]}
+```
+转换为Map：使用asMap方法可以将Multimap转换为Map<K, Collection>的形式,同样这个Map也可以看做一个关联的视图,在这个Map上的操作会作用域原始的Multimap
+```
+        Map<String, Collection<Integer>> reverseMap = multimap.asMap();
+        for (String key : reverseMap.keySet()) {
+            System.out.println(key+" : "+reverseMap.get(key));
+        }
+        reverseMap.get("day").add(20);
+        System.out.println(reverseMap);
+```
+数量问题：Multimap中的数量在使用中也有些容易混淆的地方,因为size方法返回的是所有key到value的映射
+```
+        System.out.println(multimap.size()); //5
+        System.out.println(multimap.entries().size());//5
+        for (Map.Entry<String, Integer> entry : multimap.entries()) {
+            System.out.println(entry.getKey()+","+entry.getValue());
+        }
+```
+***4、*** RangeMap - 范围Map  
+假设我们现在要对用户的年龄进行一个分类
+```
+closedOpen-左闭右开[) closed-左闭右闭[] openClosed-左开右闭 (]
+TreeRangeMap<Integer, String> rangeMap = TreeRangeMap.create();
+        rangeMap.put(Range.closedOpen(0, 18),"未成年");
+        rangeMap.put(Range.closed(18, 30),"青年");
+        rangeMap.put(Range.openClosed(30, 60),"壮年");
+        rangeMap.put(Range.atLeast(60),"老年");
+        System.out.println(rangeMap.get(15)); // 未成年
+        System.out.println(rangeMap.get(18)); // 青年
+        System.out.println(rangeMap.get(25)); // 青年
+        System.out.println(rangeMap.get(30)); // 青年
+        System.out.println(rangeMap.get(35)); // 壮年
+        System.out.println(rangeMap.get(60)); // 老年
+        System.out.println(rangeMap.get(65)); // 老年
 ```
