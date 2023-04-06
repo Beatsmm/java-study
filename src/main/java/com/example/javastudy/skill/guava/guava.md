@@ -147,3 +147,25 @@ TreeRangeMap<Integer, String> rangeMap = TreeRangeMap.create();
         System.out.println(rangeMap.get(60)); // 老年
         System.out.println(rangeMap.get(65)); // 老年
 ```
+***5、*** ClassToInstanceMap-实例Map  
+ClassToInstanceMap是一个比较特殊的Map,它的键是Class,而这个值是这个Class对应的实例对象
+```
+    MutableClassToInstanceMap<Object> instanceMap = MutableClassToInstanceMap.create();
+        User user = new User("张三",18);
+        Goods goods = new Goods("鼠标", new BigDecimal("100"));
+        instanceMap.put(User.class, user);
+        instanceMap.put(Goods.class, goods);
+        User instanceUser = instanceMap.getInstance(User.class);
+        if (instanceUser == user) System.out.println(true);
+```
+其实这跟Map<Class, Object>的区别就是在取出对象的时候省去了复杂的强制类型转换,避免了手动进行类型转换的错误  
+同样可以对类型起到约束的作用,value要符合key所对应的类型,HashMap和TreeMap都集成了Map父类,但是如果想放入其他类型就会报错,如果想缓存对象又不想做复杂的类型校验,可以使用ClassToInstanceMap
+```
+    MutableClassToInstanceMap<Map> classToInstanceMap = MutableClassToInstanceMap.create();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        TreeMap<String, Object> treeMap = new TreeMap<>();
+        ArrayList<Object> list = new ArrayList<>();
+        classToInstanceMap.put(HashMap.class, hashMap);
+        classToInstanceMap.put(TreeMap.class, treeMap);
+//        classToInstanceMap.put(ArrayList.class, list); // 编译不通过
+```
