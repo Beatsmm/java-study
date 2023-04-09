@@ -9,6 +9,7 @@
         <module>authorization</module>
         <module>jvm</module>
         <module>es</module>
+        <module>mongoDB-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
