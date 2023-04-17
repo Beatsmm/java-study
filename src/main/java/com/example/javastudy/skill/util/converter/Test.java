@@ -2,9 +2,7 @@ package com.example.javastudy.skill.util.converter;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
-import org.yaml.snakeyaml.introspector.PropertyUtils;
 
-import java.lang.reflect.InvocationTargetException;
 
 public class Test {
 
