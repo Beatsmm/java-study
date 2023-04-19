@@ -10,6 +10,7 @@
         <module>jvm</module>
         <module>es</module>
         <module>mongoDB-demo</module>
+        <module>springboot-nginx</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
