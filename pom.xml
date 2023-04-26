@@ -11,6 +11,7 @@
         <module>es</module>
         <module>mongoDB-demo</module>
         <module>springboot-nginx</module>
+        <module>grpc-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
