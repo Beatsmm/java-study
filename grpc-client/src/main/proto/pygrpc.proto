@@ -7,7 +7,11 @@ option java_outer_classname = "ProtoService";
 package pygrpc;
 
 service PythonService {
+  // 第一次java调用python
   rpc callPythonMethod (Request) returns (Response) {}
+
+  // 第二次python调用java
+  rpc callPythonMethod2 (Request1) returns (Response1) {}
 }
 
 message Request {
@@ -15,5 +19,13 @@ message Request {
 }
 
 message Response {
+  string message = 1;
+}
+
+message Request1 {
+  string message = 1;
+}
+
+message Response1 {
   string message = 1;
 }
