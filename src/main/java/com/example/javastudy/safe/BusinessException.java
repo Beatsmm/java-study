@@ -29,7 +29,7 @@ public class BusinessException extends RuntimeException {
         super(msg);
         this.setCode(BusinessCode.FAILD.getCode());
         this.setMsg( msg);
-        this.cause = e;
+//        this.cause = e;
     }
 
     public BusinessException(BusinessCode businessCode, String msg) {

@@ -16,7 +16,9 @@ public class CountDownLatchTest {
      */
     public static void main(String[] args) {
         // 用两个线程模拟两个用户
-        CountDownLatch countDownLatch = new CountDownLatch(2);
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+        long start = System.currentTimeMillis();
+        System.out.println("开始时间"+System.currentTimeMillis());
         new Thread(()->{
             System.out.println(Thread.currentThread().getName()+"加载到了100%");
             countDownLatch.countDown();
@@ -26,12 +28,23 @@ public class CountDownLatchTest {
             System.out.println(Thread.currentThread().getName()+"加载到了100%");
             countDownLatch.countDown();
         },"ThreadB").start();
+        new Thread(() -> {
+            try{
+                Thread.sleep(3000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName()+"加载到了100%");
+            countDownLatch.countDown();
+        },"ThreadC").start();
         // 让主线程等待两个用户线程都加载完毕
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("准备完毕开始游戏");
+        long end = System.currentTimeMillis();
+        long time = end-start;
+        System.out.println("准备完毕开始游戏"+time);
     }
 }
