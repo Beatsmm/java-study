@@ -12,6 +12,7 @@
         <module>mongoDB-demo</module>
         <module>springboot-nginx</module>
         <module>grpc-client</module>
+        <module>caffeine</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
