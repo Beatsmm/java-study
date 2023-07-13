@@ -4,16 +4,25 @@ package com.example.javastudy.skill.stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aspectj.bridge.IMessage;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class User {
 
+    @NotNull(message = "id不能为空")
     private Integer id;
 
+    @NotBlank(message = "name不能为空")
     private String name;
 
+    @NotNull(message = "age不能为空")
     private Integer age;
 
 
